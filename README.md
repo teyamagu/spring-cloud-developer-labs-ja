@@ -22,7 +22,7 @@
 - Fault Tolernce Patterns
 - [Fault Tolerance with Hystrix](lab10-hystrix-circuit-breaker.md)
 - [Hystrix Isolation Strategy](lab11-hystrix-isolation-strategies.md)
-- [Fault Tolerance with Hystrix](lab12-hystrix-stats-aggregation.md)
+- [Hystrix Stats Aggregation](lab12-hystrix-stats-aggregation.md)
 
 ## Config Server
 - External Configuration Patterns
