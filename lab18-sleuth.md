@@ -1,4 +1,4 @@
-Lab: Distributed Traces - Sleuth
+Lab: Distributed Trace - Sleuth
 ======================================
 
 # この演習の目標
@@ -397,7 +397,7 @@ curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -
 ```
 
 <!------------------------------------------------------------->
-# 6. 後片付け
+# 4. 後片付け
 - 全クラスを停止してください。
 - 下記のコマンドでコミットしてください。
 
