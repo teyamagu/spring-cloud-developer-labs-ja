@@ -1,4 +1,4 @@
-# Dockerイメージ作成（rabbitmq/Dockerfileディレクトリで実行）
+# Dockerイメージ作成（このテキストファイルがあるディレクトリで実行）
 docker image build -t rabbitmq-scd .
 
 # イメージからコンテナ作成
