@@ -140,7 +140,7 @@ spring.application.name=timesheets-server
 spring.cloud.config.fail-fast=true
 ```
 
-> `spring.cloud.config.fail-fast=true` は、Config Serverへの接続に失敗すると起動しないという設定です（デフォルトは `false` ）。
+> `spring.cloud.config.fail-fast=true` は、Config Serverへの接続に失敗すると起動しないという設定です。デフォルトは `false` で、失敗時はローカルの `application.properties` などの値を利用して起動を試みます。
 
 ## TODO 4-03
 `timesheets-server` を再起動してください（ `config-server` は起動しないでください）。
