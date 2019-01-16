@@ -1,6 +1,12 @@
 [日本語要約版] Spring Cloud Developer Labs
 ==========================================
 
+# 準備手順
+[こちら](preparation.md)に従って準備してください。
+
+# 演習の全体像
+各マイクロサービスやコンポーネントの依存関係は[こちら](service-dependency-graph.png)
+
 # 目次
 ## Introduction
 - Course Agenda
