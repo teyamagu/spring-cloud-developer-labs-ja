@@ -213,7 +213,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
-@EnableHystrixDashboard
+@EnableHystrixDashboard // Hystrix Dashboardを有効化する
 @SpringBootApplication
 public class HystrixDashboardApp {
 
@@ -244,7 +244,7 @@ server.port=8085
 ブラウザで http://localhost:8085/hystrix を開いてください。これがHystrix Dashboardです。
 
 ## TODO 5-10
-Hystrix DashboardのURL入力欄に「http://localhost:8084/hystrix.stream」と入力し[Monitor Stream]ボタンをクリックしてください。
+Hystrix DashboardのURL入力欄に `http://localhost:8084/hystrix.stream` と入力し[Monitor Stream]ボタンをクリックしてください。
 
 ## TODO 5-11
 `timesheets-server` に負荷をかけるために、下記のコマンドを実行してください。0.1秒ごとに1回、curlコマンドを実行しています。
