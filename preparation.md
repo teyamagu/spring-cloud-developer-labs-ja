@@ -10,6 +10,9 @@ Spring Cloud Developer事前準備手順 (by Casareal, 2019-01-07)
 6. ダウンロードした `spring-cloud-developer-code.zip` を適当なディレクトリに展開してください。
 
 # インストール
+
+> PCのメモリは8GB以上（可能であれば16GB以上）を推奨します。
+
 ## JDK 8
 1. Oracle JDK 8を[こちら](https://www.oracle.com/technetwork/java/javase/downloads/index.html)からダウンロード・インストールしてください。
 2. 環境変数 `JAVA_HOME` ・ `PATH` を設定してください。
@@ -69,4 +72,3 @@ Spring Cloud Developer事前準備手順 (by Casareal, 2019-01-07)
 
 1. [JMeterの公式サイト](http://jmeter.apache.org/download_jmeter.cgi?Preferred=ftp%3A%2F%2Fapache.mirrors.tds.net%2Fpub%2Fapache.org%2F)から `apache-jmeter-5.0.zip` をダウンロードしてください。
 2. 適当なフォルダにZIPファイルを展開し、 `apache-jmeter-5.0/bin` ディレクトリを環境変数 `PATH` に設定してください。
-
