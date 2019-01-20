@@ -225,7 +225,8 @@ RabbitMQの管理画面で[Traceタブ](http://localhost:15672/#/traces)を開�
 下記のコマンドで、 `timesheets-server` のみリフレッシュを行ってください。
 
 ```bash
-curl -X POST -H "Content-Type: application/json" http://localhost:8084/bus/refresh?destination=timesheets-server:**
+curl -X POST -H "Content-Type: application/json" \
+http://localhost:8084/bus/refresh?destination=timesheets-server:**
 ```
 
 > `/bus/refresh?destination=アプリケーション名:ポート番号` で、指定したアプリケーション( `spring.application.name` )・ポート番号のインスタンスのみを更新します。ポート番号を `**` とすると、そのアプリケーションの全インスタンスが更新されます。

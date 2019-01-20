@@ -101,7 +101,8 @@ spring.sleuth.sampler.percentage=1.0
 下記のcurlコマンドを実行してください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
 ```
 
 ブラウザで[Zipkin UI](http://localhost:9411)を開いて、[Find Traces]ボタンをクリックしてください。そうすると、先ほどのリクエストのトレースが表示されます。
@@ -240,7 +241,8 @@ RABBIT_URI=amqp://guest:guest@localhost:5672 java -jar platform-services/zipkin/
 下記のcurlコマンドを実行してください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
 ```
 
 ## TODO 4-09

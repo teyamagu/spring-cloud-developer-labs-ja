@@ -68,7 +68,8 @@ logging.level.org.springframework.cloud.sleuth=DEBUG
 下記のcurlコマンドで `timesheets-server` にアクセスしてください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
 ```
 
 ## TODO 2-05
@@ -227,7 +228,8 @@ public class RegistrationApp {
 `registration-server` を再起動後、下記のcurlコマンドで `timesheets-server` にアクセスしてください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
 ```
 
 ## TODO 2-A4 (オプション)
@@ -381,7 +383,8 @@ public class ProjectController {
 curlコマンドでアクセスしてください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
 ```
 
 `registration-server` のログを確認してください。

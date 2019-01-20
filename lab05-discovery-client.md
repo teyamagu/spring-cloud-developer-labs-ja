@@ -333,7 +333,8 @@ public class TimesheetsApp {
 `timesheets-server` が正しく動作しているか、下記のcurlコマンドで確認してください。1つ目のコマンドで登録したデータが、2つ目のコマンドで取得できれば成功です。
 
 ```bash
-curl -X POST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -X POST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}" \
 curl localhost:8084/time-entries?userId=1
 ```
 

@@ -146,14 +146,18 @@ turbine.appConfig=TIMESHEETS-SERVER
 下記のコマンドで、 `timesheets-server` (ポート番号8084)にアクセスしてください。
 
 ```bash
-while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";  done;
+while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" \ localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"; \
+done;
 ```
 
 ## TODO 4-02
 下記のコマンドで、 `timesheets-server` (ポート番号9084)にアクセスしてください。
 
 ```bash
-while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" localhost:9084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";  done;
+while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" \ localhost:9084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"; \
+done;
 ```
 
 ## TODO 4-03
@@ -177,7 +181,7 @@ while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" local
 ## TODO 5-03
 URL入力欄に「http://localhost:8086/turbine.stream」と入力してください。
 
-> これは「デフォルトクラスター」と呼ばれます。特定のクラスターを指定する場合は「http://localhost:8086/turbine.stream?cluster=クラスター名」と入力します。
+> これは「デフォルトクラスター」と呼ばれます。特定のクラスターを指定する場合は `http://localhost:8086/turbine.stream?cluster=クラスター名` と入力します。
 
 ## TODO 5-04
 [Monitor Stream]ボタンをクリックして監視画面に遷移してください。[Hosts]が「2」になっており、2インスタンスを監視できていることが分かります。

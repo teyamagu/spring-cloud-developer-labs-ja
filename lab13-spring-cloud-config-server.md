@@ -241,7 +241,8 @@ curl localhost:8084/env
 下記のコマンドで `timesheets-server` にアクセスし、正常にレスポンスされることを確認してください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
 ```
 
 > Config ServerのURLは、 Config Clientの `application.properties` に `spring.cloud.config.uri` プロパティ（デフォルト値は `http://localhost:8888` ）で指定します。
@@ -334,7 +335,8 @@ curl localhost:8084/env
 下記のコマンドで、アプリケーションが正しく動作している（レスポンスステータスコードが201になる）ことを確認してください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
 ```
 
 <!------------------------------------------------------------->
@@ -424,7 +426,8 @@ curl -i -XPOST localhost:8084/refresh
 下記のcurlコマンドを実行すると、レスポンスステータスコードが500になります。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
 ```
 
 これは、アクセスする際のURLが変更されたことにより、 `timesheets-server` が `registration-server` に正しくアクセスできなくなったためです。

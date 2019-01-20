@@ -144,7 +144,8 @@ public class ProjectClient {
 動作確認のため、下記コマンドを実行してください。
 
 ```bash
-curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
+curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}"
 ```
 
 コンソールに `getProject` メソッドのログが出力されていることを確認してください。
@@ -250,7 +251,9 @@ Hystrix DashboardのURL入力欄に `http://localhost:8084/hystrix.stream` と�
 `timesheets-server` に負荷をかけるために、下記のコマンドを実行してください。0.1秒ごとに1回、curlコマンドを実行しています。
 
 ```bash
-while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";  done;
+while true; sleep .1; do curl -i -XPOST -H"Content-Type: application/json" \
+localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";  done;
 ```
 
 ## TODO 5-12

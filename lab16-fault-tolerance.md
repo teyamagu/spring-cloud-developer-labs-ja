@@ -97,7 +97,8 @@ git commit -m"Add registration server endpoint"
 下記のコマンドで正しく実行できることを確認してください。
 
 ```bash
-curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
+curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
 ```
 
 ## TODO 3-04
@@ -107,7 +108,8 @@ curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ -d
 下記のコマンドで正しく実行できることを確認してください。
 
 ```bash
-curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
+curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
 ```
 
 一旦Config Serverから受け取った設定はConfig Clientでキャッシュされています。なので、Config Serverが停止してもConfig Clientは正しく動作します。
@@ -181,7 +183,8 @@ spring.cloud.config.retry.multiplier=1.5
 下記のコマンドで正しく実行できることを確認してください。
 
 ```bash
-curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ -d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
+curl -X POST -H "Content-Type: application/json" localhost:8084/time-entries/ \
+-d"{\"projectId\": 1, \"userId\": 1, \"date\": \"2015-05-17\", \"hours\": 6}";
 ```
 
 <!------------------------------------------------------------->
