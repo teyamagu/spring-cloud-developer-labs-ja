@@ -260,11 +260,9 @@ localhost:8084/time-entries/ \
 `components/projects` の `ProjectController#get` メソッドでは、レスポンスを意図的に遅くするための処理が記述されています。
 
 - 30秒間はすぐにレスポンスを返します。サーキットはClosedのままです。
-- 各1分間の後半30秒は、レスポンスに7秒かかります。これによりタイムアウト（デフォルトの閾値が5秒間であるため）が発生します。
-  - `requestVolumeThreshold` を `2` に指定すると、サーキットがOpenになります。
-
-During a half minute, the controller will respond promptly, and the circuit will be closed.
-In the second half of each minute, a 7-second latency in the response is introduced, which will cause the circuit to timeout after 5 seconds. Combined with the requestVolumeThreshold setting of 2 (two failures is sufficient to trip the circuit in a given time window), you will see the circuit open.
+- 各1分間の後半30秒は、レスポンスに7秒かかります。これによりタイムアウトが発生し、サーキットがOpenになります。
+  - `application.properties` で、 デフォルトのタイムアウト時間を5秒（ `hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=5000` ）、リクエスト数を2（ `hystrix.command.default.circuitBreaker.requestVolumeThreshold=2` ）に設定したため
+- サーキットがOpenのときは、すぐにレスポンスが返ってきます。これは、フォールバックが実行されているためです。
 
 <!------------------------------------------------------------->
 # 6. インスタンスダウン障害のハンドリング
