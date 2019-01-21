@@ -38,7 +38,7 @@ git checkout -b my-hystrix-isolation-strategies-start hystrix-isolation-strategi
 > `commandKey` 要素はこのコマンドの名前を指定します。指定しなかった場合、メソッド名が使われます。
 
 ## TODO 3-02
-`components/timesheets` フォルダの `application.properties` を見てください（変更不要）。
+`applications/timesheets-server` の `application.properties` を見てください（変更不要）。
 
 `hystrix.command.default` で始まる3つのHystrix関連プロパティが指定されています。
 
@@ -120,6 +120,7 @@ management.security.enabled=false
 Hystrix Dashboardを確認してください。
 
 - `ProjectClient` のCircuitがOpenになります。全リクエストでタイムアウトが発生したためです。
+  - タイムアウト時間は、 `application.properties` で2秒に設定されています。
 - しばらくすると、ほとんどの経過時間が0msになります。これは、Open状態ではすぐにフォールバックが実行され、registration-serverへのリクエストが行われないためです。
 - たまに経過時間が長くなっているのは、5秒毎にHalf Open状態になり、registration-serverへのリクエストが行われるためです。しかし、またタイムアウトが発生するため、すぐにOpen状態に戻ります。これが繰り返されます。
 
@@ -196,15 +197,16 @@ Hystrix Dashboardを確認してください。
 - `ProjectClientCache` のCircuitはClose状態になっています。レスポンス時間は約1msです。
 
 ## TODO 7-10
-JMeterのコンソール出力を確認してください。 `Err` は0になっているはずです。フォールバックによって、エラーは伝搬していません。
+JMeterのコンソール出力を確認してください。エラーが発生している（ `Err` が0以外の値になっている）はずです。
 
 ## TODO 7-11
-http://localhost:8084/metrics にブラウザでアクセスし、 `threads` の数を確認してください。1分後、ブラウザをリロードしてください。 `threads` の数は変わったはずです。
+http://localhost:8084/metrics にブラウザでアクセスし、 `threads` の数を確認してください。1分待った後、ブラウザをリロードしてください。 `threads` の数が変わったはずです。
 
 これは、セマフォがスレッドのスタックを防いでいないことを示しています。
 
-- 
-
+- サーキットブレイカーがHalf Open状態での最初に実行されるリクエストは、Tomcatスレッドプールを枯渇させます。
+- JMeterからtimesheets-serverへの最初のリクエストは、JMeterクライアントソケット接続でタイムアウトとなり、エラーが表示されます。
+- テストの実行を続けていると、Tomcatはスレッドを使い果たし、再起動するまでtimesheets-serverはハングし続けます。
 
 ## TODO 7-12
 JMeterを停止してください。
@@ -212,12 +214,155 @@ JMeterを停止してください。
 <!------------------------------------------------------------->
 # 8. 信頼できるクライアントでのセマフォの利用
 
+## TODO 8-01
+`ProjectClient` にソケットタイムアウトを設定するために、`applications/timesheets-server` の `application.properties` を下記のように編集してください。
+
+```
+spring.application.name=timesheets-server
+
+server.port=8084
+registration.server.endpoint=http://localhost:8083
+management.security.enabled=false
+
+## Project Client Socket Timeout Config
+project.client.connect.timeout.ms=500
+project.client.read.timeout.ms=1000
+
+## Hystrix Configuration
+hystrix.command.default.execution.isolation.strategy=SEMAPHORE
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=2000
+hystrix.command.default.circuitBreaker.requestVolumeThreshold=2
+```
+
+## TODO 8-02
+`timesheets-server` の `TimesheetsApp` クラスを下記のように編集してください。 `RestOperations` Beanを上書きして、ソケットタイムアウトのパラメーターを受け取るようにしてください。
+
+```java
+package io.pivotal.pal.tracker.timesheets;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Primary;
+import org.springframework.web.client.RestOperations;
+
+import java.util.TimeZone;
 
 
+@SpringBootApplication
+@EnableCircuitBreaker
+@ComponentScan({"io.pivotal.pal.tracker.timesheets", "io.pivotal.pal.tracker.restsupport"})
+public class TimesheetsApp {
 
+    public static void main(String[] args) {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        SpringApplication.run(TimesheetsApp.class, args);
+    }
+
+    // NOTE: We are ignoring the Rest Support Rest Operations
+    // given we must apply RestTemplateBuilder via Spring Boot
+    // Dependencies
+    @Primary
+    @Bean
+    RestOperations restOperations(
+            @Value("${project.client.connect.timeout.ms}") int connectTimeout,
+            @Value("${project.client.read.timeout.ms}") int readTimeout
+    ) {
+        return new RestTemplateBuilder()
+                .setConnectTimeout(connectTimeout)
+                .setReadTimeout(readTimeout)
+                .build();
+    }
+
+    @Bean
+    ProjectClient projectClient(
+        RestOperations restOperations,
+        @Value("${registration.server.endpoint}") String registrationEndpoint
+    ) {
+        return new ProjectClient(restOperations, registrationEndpoint);
+    }
+}
+```
+
+> `RestTemplateBuilder` クラスは、Spring Bootで定義されています。その名の通り、様々なパラメーターを受け取って `RestTemplate` を生成するクラスです。
+
+## TODO 8-03
+`timesheets-server` を再起動してください。
+
+## TODO 8-04
+`applications/registration-server` の `application.properties` を下記のように変更し、スリープ時間を100ミリ秒に設定してください。
+
+```
+spring.application.name=registration-server
+
+server.port=8083
+
+# Change this property
+registration.server.latency.ms=100
+
+management.security.enabled=false
+```
+
+変更を保存したら、 `registration-server` を再起動してください。
 
 <!------------------------------------------------------------->
-# 7. 後片付け
+# 9. テストの再実行
+## TODO 9-01
+JMeterを起動してください。
+
+## TODO 9-02
+[Hystrix Dashboard](http://localhost:8085/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A8084%2Fhystrix.stream)を確認してください。エラーは表示されていないことが分かります。
+
+## TODO 9-03
+`applications/registration-server` の `application.properties` を下記のように変更し、スリープ時間を1000000ミリ秒に設定してください。
+
+```
+spring.application.name=registration-server
+
+server.port=8083
+
+# Change this property
+registration.server.latency.ms=1000000
+
+management.security.enabled=false
+```
+
+## TODO 9-04
+`registration-server` を再起動してください。
+
+## TODO 9-05
+[Hystrix Dashboard](http://localhost:8085/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A8084%2Fhystrix.stream)を確認してください。
+
+- サーキットブレイカーがOpenになります。
+- レイテンシーが1000ミリ秒前後になっています。
+
+## TODO 9-06
+`applications/registration-server` の `application.properties` を下記のように変更し、スリープ時間を100ミリ秒に設定してください。
+
+```
+spring.application.name=registration-server
+
+server.port=8083
+
+# Change this property
+registration.server.latency.ms=100
+
+management.security.enabled=false
+```
+
+変更を保存したら、 `registration-server` を再起動してください。
+
+## TODO 9-07
+[Hystrix Dashboard](http://localhost:8085/hystrix/monitor?stream=http%3A%2F%2Flocalhost%3A8084%2Fhystrix.stream)を確認してください。
+
+- サーキットブレイカーがClosedに戻ります。
+
+<!------------------------------------------------------------->
+# 10. 後片付け
 - 全クラスを停止してください。
 - 下記のコマンドでコミットしてください。
 
