@@ -9,6 +9,8 @@ Spring Cloud Developer事前準備手順 (by Casareal, 2019-01-07)
 5. [Download the Source Code]の[Download the code repo zip file.]をクリックしてください。これが演習のソースコードです。
 6. ダウンロードした `spring-cloud-developer-code.zip` を適当なディレクトリに展開してください。
 
+> [Google Drive](https://drive.google.com/open?id=1VoMCdvcOmxdwIeBTeoTDSPK25B0dHoO0)に同じもの（ `spring-cloud-developer-code.zip` ）がありますので、そちらを使っていただいてもOKです。
+
 # インストール
 
 > PCのメモリは8GB以上（可能であれば16GB以上）を推奨します。
