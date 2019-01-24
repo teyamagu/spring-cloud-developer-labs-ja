@@ -21,7 +21,7 @@ git checkout -b my-eureka-server-start eureka-server-start
 
 ## TODO 2-01
 1. `platform-serivces` ディレクトリ直下に `eureka-server` ディレクトリを作成してください。
-2. `eureka-server` ディレクトリ直下に `src/main/java` ・ `src/main/reources` ディレクトリを作成してください。
+2. `eureka-server` ディレクトリ直下に `src/main/java` ・ `src/main/resources` ディレクトリを作成してください。
 3. `eureka-server` ディレクトリ直下に `build.gradle` ファイルを作成し、下記のように記述してください。
 
 ```groovy
@@ -73,7 +73,7 @@ public class EurekaServerApp {
 ```
 
 ## TODO 2-04
-`eureka-server/src/main/java` ディレクトリ直下に `application.yml` ファイルを作成し、下記のように記述してください。
+`eureka-server/src/main/resources` ディレクトリ直下に `application.yml` ファイルを作成し、下記のように記述してください。
 
 ```yaml
 spring:
